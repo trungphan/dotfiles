@@ -45,6 +45,12 @@ call unite#custom_source('location_list', 'converters', 'converter_quickfix_high
 filetype on
 filetype plugin on
 
+let g:unite_cmd_list = [
+    \ ["Navigate: Files", "command", ":Unite -start-insert -buffer-name=Files file_rec/async"],
+    \ ["Navigate: Outline", "command", ":Unite -start-insert -buffer-name=Outline outline"],
+    \ ["Build: Make", "command", ":make | cw"],
+    \ ]
+
 " Tabs
 set tabstop=4
 set shiftwidth=4
