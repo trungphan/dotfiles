@@ -112,7 +112,7 @@ nmap <S-tab> :bprevious<cr>
 map <C-W><C-M> :update<cr>:make<cr>:cw<cr><cr>
 
 
-call unite#custom_source('file,file_rec,file_rec/async,outline,qmenu', 'matchers', ['matcher_fuzzy'])
+call unite#custom_source('file,file_rec,file_rec/async,outline,cmd', 'matchers', ['matcher_fuzzy'])
 
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
@@ -121,7 +121,6 @@ nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
 nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
-nnoremap <leader>m :<C-u>Unite -buffer-name=command -start-insert cmd<cr>
 nnoremap <leader>c :<C-u>Unite -buffer-name=command -start-insert cmd<cr>
 
 " Custom mappings for the unite buffer
