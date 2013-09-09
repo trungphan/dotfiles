@@ -23,13 +23,13 @@ NeoBundle 'matchit.zip'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'thinca/vim-quickrun'
-NeoBundle 'trungphan/unite-qmenu'
+NeoBundle 'trungphan/unite-cmd'
 
 " Solarized colorscheme
 set t_Co=16
 colorscheme solarized
 let g:solarized_termcolors=16
-let g:airline_theme='solarized'
+" let g:airline_theme='solarized'
 set background=dark
 
 " Remove arrow for airline status line
@@ -94,7 +94,7 @@ let mapleader=","
 
 let g:ctrlp_custom_ignore = 'surefire-report\|__pycache__\|doc/'
 
-let g:unite_source_file_rec_ignore_pattern = '/doc\/\|lib\/\|\.idea\/\|target\/\|\.git/'
+let g:unite_source_file_rec_ignore_pattern = '/bin\/\|doc\/\|lib\/\|\.idea\/\|target\/\|\.git\|\.DS_Store/'
 
 map <F7> :update<cr>:make<cr>:cw<cr><cr>
 map <F8> :cprevious<cr>
@@ -115,7 +115,8 @@ nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
 nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
-nnoremap <leader>m :<C-u>Unite -buffer-name=menu    -start-insert qmenu<cr>
+nnoremap <leader>m :<C-u>Unite -buffer-name=command -start-insert cmd<cr>
+nnoremap <leader>c :<C-u>Unite -buffer-name=command -start-insert cmd<cr>
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
