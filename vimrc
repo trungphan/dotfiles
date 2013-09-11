@@ -24,6 +24,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'trungphan/unite-cmd'
+NeoBundle 'tomtom/tcomment_vim'
 
 " Solarized colorscheme
 set t_Co=16
@@ -48,7 +49,14 @@ filetype plugin on
 let g:unite_cmd_list = [
     \ ["Navigate: Files", "command", ":Unite -start-insert -buffer-name=Files file_rec/async"],
     \ ["Navigate: Outline", "command", ":Unite -start-insert -buffer-name=Outline outline"],
+    \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
+    \ ["Navigate: MRU", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
+    \ ["Navigate: Directory Tree", "command", ":NERDTreeToggle"],
     \ ["Build: Make", "command", ":make | cw"],
+    \ ["Display: Toggle Invisible", "command", ":set list!"],
+    \ ["Display: Toggle Highlight Search", "command", ":set hlsearch!"],
+    \ ["Display: Toggle Background Light\/Dark", "command", ":let &background = ( &background == 'dark'? 'light' : 'dark' )"],
+    \ ["Preferences: VIMRC", "command", ":vsplit $MYVIMRC"],
     \ ]
 
 " Tabs
@@ -131,6 +139,7 @@ function! s:unite_settings()
   " Enable navigation with control-j and control-k in insert mode
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+  nmap <buffer> <esc>   <Plug>(unite_exit)
 endfunction
 
 " Load local vimrc if found
