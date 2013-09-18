@@ -31,7 +31,7 @@ set t_Co=16
 colorscheme solarized
 let g:solarized_termcolors=16
 " let g:airline_theme='solarized'
-set background=dark
+set background=light
 
 " Remove arrow for airline status line
 let g:airline_left_sep=' '
@@ -44,24 +44,31 @@ call unite#custom_source('quickfix', 'converters', 'converter_quickfix_highlight
 call unite#custom_source('location_list', 'converters', 'converter_quickfix_highlight')
 
 filetype on
+filetype indent on
 filetype plugin on
+filetype plugin indent on
 
 let g:unite_cmd_list = [
-    \ ["Navigate: Files", "command", ":Unite -start-insert -buffer-name=Files file_rec/async"],
+    \ ["File: Open/New", "command", ":Unite -start-insert -buffer-name=Files file"],
+    \ ["Search: ", "command", ":UniteWithCursorWord -buffer-name=Search grep"],
+    \ ["Navigate: Resources", "command", ":Unite -start-insert -buffer-name=Resources file_rec/async"],
     \ ["Navigate: Outline", "command", ":Unite -start-insert -buffer-name=Outline outline"],
     \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
     \ ["Navigate: MRU", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
     \ ["Navigate: Directory Tree", "command", ":NERDTreeToggle"],
     \ ["Build: Make", "command", ":make | cw"],
     \ ["Display: Toggle Invisible", "command", ":set list!"],
+    \ ["Display: Toggle Syntax", "command", ":if exists('g:syntax_on') | syntax off | else | syntax enable | endif"],
     \ ["Display: Toggle Highlight Search", "command", ":set hlsearch!"],
     \ ["Display: Toggle Background Light\/Dark", "command", ":let &background = ( &background == 'dark'? 'light' : 'dark' )"],
     \ ["Preferences: VIMRC", "command", ":vsplit $MYVIMRC"],
+    \ ["Preferences: Rebuild Tags", "command", "VimProcBang ctags -R ./src"],
     \ ]
 
 " Tabs
 set tabstop=4
 set shiftwidth=4
+set softtabstop=4
 set expandtab
 set autoindent
 let loaded_matchparen=1
@@ -120,7 +127,9 @@ nmap <S-tab> :bprevious<cr>
 map <C-W><C-M> :update<cr>:make<cr>:cw<cr><cr>
 
 
-call unite#custom_source('file,file_rec,file_rec/async,outline,cmd', 'matchers', ['matcher_fuzzy'])
+call unite#custom_source('file_rec,file_rec/async,outline,cmd', 'matchers', ['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom#profile('source/grep', 'context', {'no_quit' : 1})
 
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
