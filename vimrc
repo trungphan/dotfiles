@@ -1,5 +1,10 @@
 set nocompatible
 
+ 
+if has('gui_running') && has('windows')
+	set guifont=DejaVu\ Sans\ Mono:h10
+endif
+
 if has('vim_starting')
     set runtimepath+=~/.vim/bundle/neobundle.vim
 endif
