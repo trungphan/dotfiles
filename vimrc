@@ -29,6 +29,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'trungphan/unite-cmd'
+NeoBundle 'trungphan/vim-java-nav'
 NeoBundle 'tomtom/tcomment_vim'
 
 " Solarized colorscheme
@@ -55,12 +56,14 @@ filetype plugin indent on
 
 let g:unite_cmd_list = [
     \ ["File: Open/New", "command", ":Unite -start-insert -buffer-name=Files file"],
+    \ ["Directory", "command", ":Unite -start-insert -buffer-name=Directories directory"],
     \ ["Search: ", "command", ":UniteWithCursorWord -buffer-name=Search grep"],
     \ ["Navigate: Resources", "command", ":Unite -start-insert -buffer-name=Resources file_rec/async"],
     \ ["Navigate: Outline", "command", ":Unite -start-insert -buffer-name=Outline outline"],
     \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
     \ ["Navigate: MRU", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
     \ ["Navigate: Directory Tree", "command", ":NERDTreeToggle"],
+    \ ["Navigate: Test", "command", ":call jump#JumpToJavaTest()"],
     \ ["Build: Make", "command", ":make | cw"],
     \ ["Display: Toggle Invisible", "command", ":set list!"],
     \ ["Display: Toggle Syntax", "command", ":if exists('g:syntax_on') | syntax off | else | syntax enable | endif"],
@@ -122,6 +125,10 @@ let g:ctrlp_custom_ignore = 'surefire-report\|__pycache__\|doc/'
 
 let g:unite_source_file_rec_ignore_pattern = '/bin\/\|doc\/\|lib\/\|\.idea\/\|target\/\|\.git\|\.DS_Store/'
 
+if filereadable(glob($VIMRUNTIME . "/autoload/vimproc_unix.so"))
+    let g:vimproc_dll_path=$VIMRUNTIME . "/autoload/vimproc_unix.so"
+endif
+
 map <F7> :update<cr>:make<cr>:cw<cr><cr>
 map <F8> :cprevious<cr>
 map <F9> :cnext<cr>
@@ -160,5 +167,4 @@ endfunction
 if filereadable(glob(".vimrc.local"))
     source .vimrc.local
 endif
-
 
