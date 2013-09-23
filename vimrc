@@ -27,10 +27,11 @@ NeoBundle 'bling/vim-airline'
 NeoBundle 'matchit.zip'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'thinca/vim-quickrun'
+" NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'trungphan/unite-cmd'
 NeoBundle 'trungphan/vim-java-nav'
 NeoBundle 'tomtom/tcomment_vim'
+NeoBundle 'tpope/vim-fugitive'
 
 " Solarized colorscheme
 set t_Co=16
