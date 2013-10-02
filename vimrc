@@ -83,6 +83,12 @@ set autoindent
 let loaded_matchparen=1
 set backspace=2
 
+set linebreak
+if exists('+breakindent')
+    set breakindent
+    set showbreak=…\ 
+endif
+
 " Mouse
 set mouse=a
 map <ScrollWheelUp> <C-Y>
