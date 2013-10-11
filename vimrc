@@ -17,21 +17,22 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite-help'
-NeoBundle 'Shougo/unite-session'
-NeoBundle 'ujihisa/unite-launch'
+"" NeoBundle 'Shougo/unite-session'
+"" NeoBundle 'ujihisa/unite-launch'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'osyo-manga/unite-quickfix'
 NeoBundle 'tpope/vim-surround'
-NeoBundle 'kien/ctrlp.vim'
+"" NeoBundle 'kien/ctrlp.vim'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'matchit.zip'
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'scrooloose/nerdtree'
-" NeoBundle 'thinca/vim-quickrun'
+"" NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'trungphan/unite-cmd'
 NeoBundle 'trungphan/vim-java-nav'
-NeoBundle 'tomtom/tcomment_vim'
+"" NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'scratch.vim'
 
 " Solarized colorscheme
 set t_Co=16
@@ -45,7 +46,7 @@ let g:airline_left_sep=' '
 let g:airline_right_sep=' '
 
 
-" Quickfix (unite.vim plugin)
+
 let g:unite_quickfix_is_multiline=0
 call unite#custom_source('quickfix', 'converters', 'converter_quickfix_highlight')
 call unite#custom_source('location_list', 'converters', 'converter_quickfix_highlight')
@@ -55,24 +56,46 @@ filetype indent on
 filetype plugin on
 filetype plugin indent on
 
-let g:unite_cmd_list = [
-    \ ["File: Open/New", "command", ":Unite -start-insert -buffer-name=Files file"],
-    \ ["Directory", "command", ":Unite -start-insert -buffer-name=Directories directory"],
+let g:unite_cmd_list = {'menu' : [
+    \ ["File: Open/New", "command", ":Unite -start-insert -buffer-name=Files file file/new"],
+    \ ["Current Directory", "command", ":execute 'Unite -start-insert -buffer-name=Files -input='.strpart(expand('%:p:h'), len(getcwd())+1).' file file/new'"],
+    \ ["Scratch", "command", ":Scratch"],
     \ ["Search: ", "command", ":UniteWithCursorWord -buffer-name=Search grep"],
+    \ ["Symbol", "command", ":Unite -start-insert -buffer-name=Symbols cmd:symbol"],
     \ ["Navigate: Resources", "command", ":Unite -start-insert -buffer-name=Resources file_rec/async"],
     \ ["Navigate: Outline", "command", ":Unite -start-insert -buffer-name=Outline outline"],
     \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
-    \ ["Navigate: MRU", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
+    \ ["Navigate: Recent", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
     \ ["Navigate: Directory Tree", "command", ":NERDTreeToggle"],
     \ ["Navigate: Test", "command", ":call jump#JumpToJavaTest()"],
     \ ["Build: Make", "command", ":make | cw"],
+    \ ["Build: Run", "command", ":make run % | cw"],
     \ ["Display: Toggle Invisible", "command", ":set list!"],
     \ ["Display: Toggle Syntax", "command", ":if exists('g:syntax_on') | syntax off | else | syntax enable | endif"],
     \ ["Display: Toggle Highlight Search", "command", ":set hlsearch!"],
     \ ["Display: Toggle Background Light\/Dark", "command", ":let &background = ( &background == 'dark'? 'light' : 'dark' )"],
-    \ ["Preferences: VIMRC", "command", ":vsplit $MYVIMRC"],
-    \ ["Preferences: Rebuild Tags", "command", "VimProcBang ctags -R ./src"],
-    \ ]
+    \ ["Git: Status", "command", ":Gstatus"],
+    \ ["Preferences: VIMRC", "command", ":if &modified | :vsplit $MYVIMRC | else | :edit $MYVIMRC | endif"],
+    \ ["Preferences: Rebuild Tags", "command", "VimProcBang ctags -R ./src/main/java"],
+    \ ],
+    \ 'symbol' : [
+    \ ["Math: Not equal                       [2260]  ≠ ", "command", ":normal i≠\<Esc>l"],
+    \ ["Math: Greater than equal              [2265]  ≥ ", "command", ":normal a≥"],
+    \ ["Math: Less than equal                 [2264]  ≤ ", "command", ":normal a≤"],
+    \ ["Math: Element of                      [2208]  ∈ ", "command", ":normal a∈"],
+    \ ["Math: Subset of                       [2282]  ⊂ ", "command", ":normal a⊂"],
+    \ ["Math: For all                         [2200]  ∀ ", "command", ":normal a∀"],
+    \ ["Math: Exists                          [2203]  ∃ ", "command", ":normal a∃"],
+    \ ["Math: Implies                         [21D2]  ⇒ ", "command", ":normal a⇒"],
+    \ ["Math: Equivalent                      [21D4]  ⇔ ", "command", ":normal a⇔"],
+    \ ["Draw: Box                                       ", "command", ":normal a─"],
+    \ ["Draw: Horizontal                      [2500]  ─ ", "command", ":normal a─"],
+    \ ["Draw: Vertical                        [2502]  │ ", "command", ":normal a│"],
+    \ ["Draw: Top Left                        [250C]  ┌ ", "command", ":normal a┌"],
+    \ ["Draw: Bottom Left                     [2514]  └ ", "command", ":normal a└"],
+    \ ["Draw: Bottom Right                    [2518]  ┘ ", "command", ":normal a┘"],
+    \ ["Draw: Top Right                       [2510]  ┐ ", "command", ":normal a┐"],
+    \ ]}
 
 " Tabs
 set tabstop=4
@@ -86,7 +109,7 @@ set backspace=2
 set linebreak
 if exists('+breakindent')
     set breakindent
-    set showbreak=…\ 
+    set showbreak=↳\ 
 endif
 
 " Mouse
@@ -152,12 +175,12 @@ call unite#custom#profile('source/grep', 'context', {'no_quit' : 1})
 
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
-nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file file/new<cr>
 nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
 nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
-nnoremap <leader>c :<C-u>Unite -buffer-name=command -start-insert cmd<cr>
+nnoremap <leader>c :<C-u>Unite -buffer-name=command -start-insert cmd:menu<cr>
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
@@ -169,6 +192,11 @@ function! s:unite_settings()
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
   nmap <buffer> <esc>   <Plug>(unite_exit)
 endfunction
+
+autocmd BufNewFile *.java
+            \ let importexpr = (expand('%:t') =~ ".*Test" ? "import org.junit.*;\nimport static org.junit.Assert.*;\n\n" : "") |
+            \ exe "normal Opackage ". substitute(strpart(expand('%:p:h'), len(getcwd())+15), "\/", ".", "g") . ";\n\n" . importexpr . "public class " . expand('%:t:r') . " {\n}\<Esc>kW"
+
 
 " Load local vimrc if found
 if filereadable(glob(".vimrc.local"))
