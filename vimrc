@@ -194,12 +194,12 @@ function! s:unite_settings()
 endfunction
 
 autocmd BufNewFile package-info.java
-            \ exe "normal a\/**\n\n@author Trung Phan\n\/\npackage ". substitute(strpart(expand('%:p:h'), len(getcwd())+15), "\/", ".", "g") . ";" . "\<Esc>gg"
+            \ exe "normal a\/**\n\n@author Trung Phan\n\n\/\npackage ". substitute(strpart(expand('%:p:h'), len(getcwd())+15), "\/", ".", "g") . ";" . "\<Esc>gg"
 
 autocmd BufNewFile *.java
             \ if expand('%:t') != 'package-info.java' |
             \     let importexpr = (expand('%:t') =~ ".*Test" ? "import org.junit.*;\nimport static org.junit.Assert.*;\n\n" : "") |
-            \     exe "normal Opackage ". substitute(strpart(expand('%:p:h'), len(getcwd())+15), "\/", ".", "g") . ";\n\n" . importexpr . "\/**\n\n@author Trung Phan\n\/\npublic class " . expand('%:t:r') . " {\n}\<Esc>kW" |
+            \     exe "normal Opackage ". substitute(strpart(expand('%:p:h'), len(getcwd())+15), "\/", ".", "g") . ";\n\n" . importexpr . "\/**\n\n@author Trung Phan\n\n\/\npublic class " . expand('%:t:r') . " {\n}\<Esc>kW" |
             \ endif
 
 
