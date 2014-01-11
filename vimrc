@@ -13,12 +13,15 @@ call neobundle#rc(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
+"To install: :NeoBundleInstall
+"To update:  :NeoBundleUpdate
+
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite-help'
-"" NeoBundle 'Shougo/unite-session'
-"" NeoBundle 'ujihisa/unite-launch'
+" NeoBundle 'Shougo/unite-session'
+" NeoBundle 'ujihisa/unite-launch'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'osyo-manga/unite-quickfix'
 NeoBundle 'tpope/vim-surround'
@@ -26,13 +29,19 @@ NeoBundle 'tpope/vim-surround'
 NeoBundle 'bling/vim-airline'
 NeoBundle 'matchit.zip'
 NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'scrooloose/nerdtree'
-"" NeoBundle 'thinca/vim-quickrun'
+" NeoBundle 'scrooloose/nerdtree'
+" NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'trungphan/unite-cmd'
 NeoBundle 'trungphan/vim-java-nav'
-"" NeoBundle 'tomtom/tcomment_vim'
+" NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'scratch.vim'
+NeoBundle 'sukima/xmledit'
+NeoBundle 'mattn/emmet-vim'
+NeoBundle 'msanders/snipmate.vim'
+" NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex', {'name': 'vim-latex'}
+" NeoBundle 'davidhalter/jedi-vim'
+NeoBundle 'ivanov/vim-ipython'
 
 " Solarized colorscheme
 set t_Co=16
@@ -62,6 +71,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Scratch", "command", ":Scratch"],
     \ ["Search: ", "command", ":UniteWithCursorWord -buffer-name=Search grep"],
     \ ["Symbol", "command", ":Unite -start-insert -buffer-name=Symbols cmd:symbol"],
+    \ ["XML: Pretty format", "command", ":% !xmllint % --format"],
     \ ["Navigate: Resources", "command", ":Unite -start-insert -buffer-name=Resources file_rec/async"],
     \ ["Navigate: Outline", "command", ":Unite -start-insert -buffer-name=Outline outline"],
     \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
@@ -79,7 +89,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Preferences: Rebuild Tags", "command", "VimProcBang ctags -R ./src/main/java"],
     \ ],
     \ 'symbol' : [
-    \ ["Math: Not equal                       [2260]  ≠ ", "command", ":normal i≠\<Esc>l"],
+    \ ["Math: Not equal                       [2260]  ≠ ", "command", ":normal a≠\<Esc>l"],
     \ ["Math: Greater than equal              [2265]  ≥ ", "command", ":normal a≥"],
     \ ["Math: Less than equal                 [2264]  ≤ ", "command", ":normal a≤"],
     \ ["Math: Element of                      [2208]  ∈ ", "command", ":normal a∈"],
@@ -88,7 +98,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Math: Exists                          [2203]  ∃ ", "command", ":normal a∃"],
     \ ["Math: Implies                         [21D2]  ⇒ ", "command", ":normal a⇒"],
     \ ["Math: Equivalent                      [21D4]  ⇔ ", "command", ":normal a⇔"],
-    \ ["Draw: Box                                       ", "command", ":normal a─"],
+    \ ["Draw: Box                                       ", "command", ":normal a┌─┬─┐│ │ │├─┼─┤└─┴─┘"],
     \ ["Draw: Horizontal                      [2500]  ─ ", "command", ":normal a─"],
     \ ["Draw: Vertical                        [2502]  │ ", "command", ":normal a│"],
     \ ["Draw: Top Left                        [250C]  ┌ ", "command", ":normal a┌"],
