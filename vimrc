@@ -82,6 +82,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Build: Run", "command", ":make run % | cw"],
     \ ["Display: Toggle Invisible", "command", ":set list!"],
     \ ["Display: Toggle Syntax", "command", ":if exists('g:syntax_on') | syntax off | else | syntax enable | endif"],
+    \ ["Display: Toggle Number", "command", ":set nu!"],
     \ ["Display: Toggle Highlight Search", "command", ":set hlsearch!"],
     \ ["Display: Toggle Background Light\/Dark", "command", ":let &background = ( &background == 'dark'? 'light' : 'dark' )"],
     \ ["Git: Status", "command", ":Gstatus"],
@@ -180,6 +181,7 @@ map <C-W><C-M> :update<cr>:make<cr>:cw<cr><cr>
 
 
 call unite#custom_source('file_rec,file_rec/async,outline,cmd', 'matchers', ['matcher_fuzzy'])
+call unite#custom_source('file_rec,file_rec/async', 'filters', ['converter_relative_word', 'matcher_default', 'sorter_default', 'converter_relative_abbr'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 call unite#custom#profile('source/grep', 'context', {'no_quit' : 1})
 
@@ -189,8 +191,17 @@ nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file file/new<
 nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
 nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
-nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
+"nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
 nnoremap <leader>c :<C-u>Unite -buffer-name=command -start-insert cmd:menu<cr>
+
+
+let g:ipy_perform_mappings = 0
+map  <buffer> <silent> <C-l>        <Plug>(IPython-RunLine)
+imap <buffer> <silent> <C-l>        <C-o><Plug>(IPython-RunLine)
+map  <buffer> <silent> <leader>d    <Plug>(IPython-OpenPyDoc)
+map  <buffer> <silent> <leader>s    <Plug>(IPython-UpdateShell)
+
+
 
 " Custom mappings for the unite buffer
 autocmd FileType unite call s:unite_settings()
