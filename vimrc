@@ -190,7 +190,7 @@ map <C-W><C-M> :update<cr>:make<cr>:cw<cr><cr>
 
 
 call unite#custom_source('file_rec,file_rec/async,outline,cmd', 'matchers', ['matcher_fuzzy'])
-call unite#custom_source('file_rec,file_rec/async', 'filters', ['converter_relative_word', 'matcher_default', 'sorter_default', 'converter_relative_abbr'])
+call unite#custom_source('file_rec,file_rec/async', 'filters', ['converter_relative_word', 'matcher_fuzzy', 'sorter_rank', 'converter_relative_abbr'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 call unite#custom#profile('source/grep', 'context', {'no_quit' : 1})
 
