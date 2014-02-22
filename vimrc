@@ -13,8 +13,10 @@ call neobundle#rc(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-"To install: :NeoBundleInstall
-"To update:  :NeoBundleUpdate
+" NOTE
+" To install: :NeoBundleInstall
+" To update:  :NeoBundleUpdate
+" For unite-outline to work for java, must install exuberant-ctags
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
@@ -25,7 +27,7 @@ NeoBundle 'Shougo/unite-help'
 NeoBundle 'tsukkee/unite-tag'
 NeoBundle 'osyo-manga/unite-quickfix'
 NeoBundle 'tpope/vim-surround'
-"" NeoBundle 'kien/ctrlp.vim'
+" NeoBundle 'kien/ctrlp.vim' " replaced by unite.vim
 NeoBundle 'bling/vim-airline'
 NeoBundle 'matchit.zip'
 NeoBundle 'altercation/vim-colors-solarized'
@@ -42,6 +44,11 @@ NeoBundle 'msanders/snipmate.vim'
 " NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex', {'name': 'vim-latex'}
 " NeoBundle 'davidhalter/jedi-vim'
 NeoBundle 'ivanov/vim-ipython'
+NeoBundle 'klen/python-mode'
+
+
+" disable rope as it's very slow
+let g:pymode_rope=0
 
 " Solarized colorscheme
 set t_Co=16
@@ -54,7 +61,7 @@ set background=light
 let g:airline_left_sep=' '
 let g:airline_right_sep=' '
 
-
+set foldlevelstart=20
 
 let g:unite_quickfix_is_multiline=0
 call unite#custom_source('quickfix', 'converters', 'converter_quickfix_highlight')
@@ -82,6 +89,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Build: Run", "command", ":make run % | cw"],
     \ ["Display: Toggle Invisible", "command", ":set list!"],
     \ ["Display: Toggle Syntax", "command", ":if exists('g:syntax_on') | syntax off | else | syntax enable | endif"],
+    \ ["Display: Toggle Paste", "command", ":set paste!"],
     \ ["Display: Toggle Number", "command", ":set nu!"],
     \ ["Display: Toggle Highlight Search", "command", ":set hlsearch!"],
     \ ["Display: Toggle Background Light\/Dark", "command", ":let &background = ( &background == 'dark'? 'light' : 'dark' )"],
@@ -157,6 +165,7 @@ set smartcase
 
 set wildignore+=*.class
 set wildignore+=*.jar
+set wildignore+=*.pyc
 
 set wildmenu
 
@@ -164,7 +173,7 @@ let mapleader=","
 
 let g:ctrlp_custom_ignore = 'surefire-report\|__pycache__\|doc/'
 
-let g:unite_source_file_rec_ignore_pattern = '/bin\/\|doc\/\|lib\/\|\.idea\/\|target\/\|\.git\|\.DS_Store/'
+" let g:unite_source_file_rec_ignore_pattern = 'bin\/\|doc\/\|lib\/\|\.*\.pyc\|\.idea\/\|target\/\|\.git\|\.DS_Store\|\.vimrc\.local'
 
 if filereadable(glob($VIMRUNTIME . "/autoload/vimproc_unix.so"))
     let g:vimproc_dll_path=$VIMRUNTIME . "/autoload/vimproc_unix.so"
