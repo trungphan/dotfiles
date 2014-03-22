@@ -232,6 +232,22 @@ autocmd BufNewFile *.java
             \     exe "normal Opackage ". substitute(strpart(expand('%:p:h'), len(getcwd())+15), "\/", ".", "g") . ";\n\n" . importexpr . "\/**\n\n@author Trung Phan\n\n\/\npublic class " . expand('%:t:r') . " {\n}\<Esc>kW" |
             \ endif
 
+" See http://stackoverflow.com/questions/5176972/trouble-using-vims-syn-include-and-syn-region-to-embed-syntax-highlighting
+function! HighlightTexWithOtherLanguages()
+    runtime! syntax/tex.vim
+
+    unlet! b:current_syntax
+    syntax include @Python syntax/python.vim
+
+    unlet! b:current_syntax
+    syntax include @TeX syntax/tex.vim
+
+    syntax region pythonCode matchgroup=Snip start="\\begin{python}" end="\\end{python}" containedin=@TeX contains=@Python
+
+    hi link Snip SpecialComment
+endfunction
+
+autocmd BufNewFile,BufRead *.tex call HighlightTexWithOtherLanguages()
 
 " Load local vimrc if found
 if filereadable(glob(".vimrc.local"))
