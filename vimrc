@@ -84,7 +84,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
     \ ["Navigate: Recent", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
     \ ["Navigate: Directory Tree", "command", ":NERDTreeToggle"],
-    \ ["Navigate: Test", "command", ":call jump#JumpToJavaTest()"],
+    \ ["Navigate: Test", "command", ":call java#JumpToJavaTest()"],
     \ ["Build: Make", "command", ":make | cw"],
     \ ["Build: Run", "command", ":make run % | cw"],
     \ ["Display: Toggle Invisible", "command", ":set list!"],
@@ -223,27 +223,11 @@ function! s:unite_settings()
   nmap <buffer> <esc>   <Plug>(unite_exit)
 endfunction
 
-function! GuessPackage()
-    let packageexpr = expand('%:p:h')
-    let i1 = len(getcwd())
-    let i2 = stridx(packageexpr, '/java', i1)
-    let packageexpr = (i2 > -1 ? strpart(packageexpr, i2+5) : strpart(packageexpr, i1))
-    if stridx(packageexpr, '/') == 0
-        let packageexpr = strpart(packageexpr, 1)
-    endif
-    if strlen(packageexpr) > 0
-        let packageexpr = "package ". substitute(packageexpr, "\/", ".", "g") . ";"
-    endif
-    return packageexpr
-endfunction
-
 autocmd BufNewFile package-info.java
-            \ exe "normal a\/**\n\n@author Trung Phan\n\n\/\n". GuessPackage() . "\<Esc>gg"
+            \ exe java#DefaultPackageInfoContent()
 autocmd BufNewFile *.java
             \ if expand('%:t') != 'package-info.java' |
-            \     let packageexpr = GuessPackage() |
-            \     let importexpr = (expand('%:t') =~ ".*Test" ? "import org.junit.*;\nimport static org.junit.Assert.*;\n\n" : "") |
-            \     exe "normal O". (strlen(packageexpr)>0? packageexpr . "\n\n" : "") . importexpr . "\/**\n\n@author Trung Phan\n\n\/\npublic class " . expand('%:t:r') . " {\n}\<Esc>kW" |
+            \     exec java#DefaultJavaContent() |
             \ endif
 
 " See http://stackoverflow.com/questions/5176972/trouble-using-vims-syn-include-and-syn-region-to-embed-syntax-highlighting

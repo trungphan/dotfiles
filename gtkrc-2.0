@@ -1,5 +1,16 @@
 style "xfdesktop-icon-view" {
-    XfdesktopIconView::label-alpha = 75
+XfdesktopIconView::label-alpha = 0
+
+base[NORMAL] = "#3F6BA4"
+base[SELECTED] = "#3F6BA4"
+base[ACTIVE] = "#3F6BA4"
+
+fg[NORMAL] = "#ffffff"
+fg[SELECTED] = "#ffffff"
+fg[ACTIVE] = "#ffffff"
+}
+style "xfdesktop-icon-view2" {
+    XfdesktopIconView::label-alpha = 0
     XfdesktopIconView::selected-label-alpha = 100
     XfdesktopIconView::ellipsize-icon-labels = 1
     XfdesktopIconView::tooltip-size = 128
@@ -15,9 +26,9 @@ style "xfdesktop-icon-view" {
     XfdesktopIconView::cell-padding = 6
     XfdesktopIconView::cell-text-width-proportion = 2.5
 
-    base[NORMAL] = "#00ff00"
-    base[SELECTED] = "#5050ff"
-    base[ACTIVE] = "#398EE7"
+    base[NORMAL] = "#3F6BA4"
+    base[SELECTED] = "#3F6BA4"
+    base[ACTIVE] = "#3F6BA4"
 
     fg[NORMAL] = "#ff0000"
     fg[SELECTED] = "#222222"
@@ -28,7 +39,7 @@ widget_class "*XfdesktopIconView*" style "xfdesktop-icon-view"
 
 style "panel"
 {
-    bg[NORMAL] = "#FFFFFF"
+    bg[NORMAL] = "#EEEEEE"
     bg[PRELIGHT] = "#2344D6"
     fg[NORMAL] = "#222222"
     fg[ACTIVE] = "#FFFFFF"
