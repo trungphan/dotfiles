@@ -50,3 +50,15 @@ style "panel"
 widget_class "*Panel*" style "panel"
 widget "*Panel*" style "panel"
 class "*Panel*" style "panel"
+
+
+
+
+# change the bound left and right key to collapse and expand tree node in tree view. Otherwise, you have to type Shift-right or Shift-left
+# see http://stackoverflow.com/questions/4747264/is-it-possible-to-use-arrow-keys-alone-to-expand-tree-node-in-package-explorer-i
+binding "gtk-binding-tree-view" {
+    bind "Left"     { "expand-collapse-cursor-row" (0,0,0) }
+    bind "Right"    { "expand-collapse-cursor-row" (0,1,0) }
+}
+class "GtkTreeView" binding "gtk-binding-tree-view"
+

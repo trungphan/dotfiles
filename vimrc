@@ -238,9 +238,14 @@ function! HighlightTexWithOtherLanguages()
     syntax include @Python syntax/python.vim
 
     unlet! b:current_syntax
+    syntax include @Java syntax/java.vim
+
+    unlet! b:current_syntax
     syntax include @TeX syntax/tex.vim
 
     syntax region pythonCode matchgroup=Snip start="\\begin{python}" end="\\end{python}" containedin=@TeX contains=@Python
+
+    syntax region javaCode matchgroup=Snip start="\\begin{java}" end="\\end{java}" containedin=@TeX contains=@Java
 
     hi link Snip SpecialComment
 endfunction
