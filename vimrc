@@ -43,12 +43,19 @@ NeoBundle 'mattn/emmet-vim'
 NeoBundle 'msanders/snipmate.vim'
 " NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex', {'name': 'vim-latex'}
 " NeoBundle 'davidhalter/jedi-vim'
-NeoBundle 'ivanov/vim-ipython'
+" NeoBundle 'ivanov/vim-ipython' " not really need ipython
 NeoBundle 'klen/python-mode'
+" NeoBundle 'VimClojure' " depreciated, replaced by vim-clojure-static, vim-fireplace
+" NeoBundle 'slimv.vim'  " for clojure no longer recommended, use fireplace
+NeoBundle 'guns/vim-clojure-static'
+NeoBundle 'tpope/vim-fireplace'
+NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'vim-scripts/paredit.vim'
 
 
 " disable rope as it's very slow
 let g:pymode_rope=0
+let g:pymode_trim_whitespaces=1
 
 " Solarized colorscheme
 set t_Co=16
@@ -71,6 +78,8 @@ filetype on
 filetype indent on
 filetype plugin on
 filetype plugin indent on
+
+set wrap
 
 let g:unite_cmd_list = {'menu' : [
     \ ["File: Open/New", "command", ":Unite -start-insert -buffer-name=Files file file/new"],
@@ -251,6 +260,38 @@ function! HighlightTexWithOtherLanguages()
 endfunction
 
 autocmd BufNewFile,BufRead *.tex call HighlightTexWithOtherLanguages()
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+ 
+" Enable rainbow parentheses for all buffers
+au VimEnter * RainbowParenthesesActivate
+au Filetype scheme,lisp,clojure RainbowParenthesesLoadRound
+au Filetype clojure RainbowParenthesesLoadSquare
+au Filetype clojure RainbowParenthesesLoadBraces
+
+au BufEnter *.java set showbreak=↳\ 
+au BufEnter *.py set showbreak=↳\ 
+au BufEnter *.tex set showbreak=
+au BufEnter *.scm set showbreak=↳\ | let b:match_skip='s:comment\|string\|character'
+" modify b:match_skip for scheme so that it ignores character constant #\( and
+" #\) when typing %
 
 " Load local vimrc if found
 if filereadable(glob(".vimrc.local"))
