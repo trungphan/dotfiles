@@ -2,7 +2,7 @@ set nocompatible
 
  
 if has('gui_running') && has('windows')
-	set guifont=DejaVu\ Sans\ Mono:h10
+	set guifont=DejaVu\ Sans\ Mono 10
 endif
 
 if has('vim_starting')
@@ -35,6 +35,7 @@ NeoBundle 'altercation/vim-colors-solarized'
 " NeoBundle 'thinca/vim-quickrun'
 NeoBundle 'trungphan/unite-cmd'
 NeoBundle 'trungphan/vim-java-nav'
+NeoBundle 'trungphan/vim-jump'
 " NeoBundle 'tomtom/tcomment_vim'
 NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'scratch.vim'
@@ -93,7 +94,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
     \ ["Navigate: Recent", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
     \ ["Navigate: Directory Tree", "command", ":NERDTreeToggle"],
-    \ ["Navigate: Test", "command", ":call java#JumpToJavaTest()"],
+    \ ["Navigate: Test", "command", ":call jump#JumpToFile()"],
     \ ["Build: Make", "command", ":make | cw"],
     \ ["Build: Run", "command", ":make run % | cw"],
     \ ["Display: Toggle Invisible", "command", ":set list!"],
@@ -196,7 +197,6 @@ nmap <tab> :bnext<cr>
 nmap <S-tab> :bprevious<cr>
 
 map <C-W><C-M> :update<cr>:make<cr>:cw<cr><cr>
-
 
 call unite#custom_source('file_rec,file_rec/async,outline,cmd', 'matchers', ['matcher_fuzzy'])
 call unite#custom_source('file_rec,file_rec/async', 'filters', ['converter_relative_word', 'matcher_fuzzy', 'sorter_rank', 'converter_relative_abbr'])
