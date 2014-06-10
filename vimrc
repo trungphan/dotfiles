@@ -52,6 +52,7 @@ NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'vim-scripts/paredit.vim'
+NeoBundle 'scrooloose/syntastic'
 
 
 " disable rope as it's very slow
