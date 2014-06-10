@@ -22,6 +22,7 @@ NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-outline'
 NeoBundle 'Shougo/unite-help'
+NeoBundle 'Shougo/neomru.vim'
 " NeoBundle 'Shougo/unite-session'
 " NeoBundle 'ujihisa/unite-launch'
 NeoBundle 'tsukkee/unite-tag'
@@ -93,7 +94,7 @@ let g:unite_cmd_list = {'menu' : [
     \ ["Navigate: Resources", "command", ":Unite -start-insert -buffer-name=Resources file_rec/async"],
     \ ["Navigate: Outline", "command", ":Unite -start-insert -buffer-name=Outline outline"],
     \ ["Navigate: Buffers", "command", ":Unite -start-insert -buffer-name=Buffers buffer"],
-    \ ["Navigate: Recent", "command", ":Unite -start-insert -buffer-name=MRU file_mru"],
+    \ ["Navigate: Recent", "command", ":Unite -start-insert -buffer-name=MRU neomru/file"],
     \ ["Navigate: Directory Tree", "command", ":NERDTreeToggle"],
     \ ["Navigate: Test", "command", ":call jump#JumpToFile()"],
     \ ["Build: Make", "command", ":make | cw"],
@@ -199,15 +200,15 @@ nmap <S-tab> :bprevious<cr>
 
 map <C-W><C-M> :update<cr>:make<cr>:cw<cr><cr>
 
-call unite#custom_source('file_rec,file_rec/async,outline,cmd', 'matchers', ['matcher_fuzzy'])
-call unite#custom_source('file_rec,file_rec/async', 'filters', ['converter_relative_word', 'matcher_fuzzy', 'sorter_rank', 'converter_relative_abbr'])
+call unite#custom#source('file_rec,file_rec/async,outline,cmd,neomru/file,file_mru', 'matchers', ['matcher_project_files', 'matcher_fuzzy'])
+call unite#custom#source('file_rec,file_rec/async,neomru/file,file_mru', 'filters', ['converter_relative_word', 'matcher_fuzzy', 'sorter_rank', 'converter_relative_abbr'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 call unite#custom#profile('source/grep', 'context', {'no_quit' : 1})
 
 let g:unite_source_history_yank_enable = 1
 nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
 nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file file/new<cr>
-nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert neomru/file<cr>
 nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
 nnoremap <leader>y :<C-u>Unite -buffer-name=yank    history/yank<cr>
 "nnoremap <leader>e :<C-u>Unite -buffer-name=buffer  buffer<cr>
