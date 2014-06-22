@@ -2,7 +2,11 @@ set nocompatible
 
  
 if has('gui_running') && has('windows')
-	set guifont=DejaVu\ Sans\ Mono 10
+    if has('win32') || has('win64')
+	    set guifont=DejaVu\ Sans\ Mono:h10
+    else
+	    set guifont=DejaVu\ Sans\ Mono 10
+    endif
 endif
 
 if has('vim_starting')
@@ -54,6 +58,7 @@ NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'vim-scripts/paredit.vim'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'dag/vim2hs'
 
 
 " disable rope as it's very slow
@@ -206,7 +211,12 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 call unite#custom#profile('source/grep', 'context', {'no_quit' : 1})
 
 let g:unite_source_history_yank_enable = 1
-nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
+if has('win32') || has('win64')
+    nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec<cr>
+else
+    nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
+endif
+
 nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file file/new<cr>
 nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert neomru/file<cr>
 nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
@@ -263,6 +273,7 @@ endfunction
 
 autocmd BufNewFile,BufRead *.tex call HighlightTexWithOtherLanguages()
 
+" rainbow colors
 let g:rbpt_colorpairs = [
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
