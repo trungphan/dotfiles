@@ -61,6 +61,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'dag/vim2hs'
 
 NeoBundle 'marijnh/tern_for_vim'
+NeoBundle 'Valloric/YouCompleteMe'
 
 " disable rope as it's very slow
 let g:pymode_rope=0
@@ -102,6 +103,13 @@ inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Es
 " open user completion menu closing previous if open and opening new menu without changing the text
 inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
             \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+
+let g:ycm_filetype_blacklist = {
+        \ 'java' : 1,
+        \ 'scm' : 1,
+        \ 'py' : 1,
+        \}
+
 
 let g:unite_cmd_list = {'menu' : [
     \ ["File: Open/New", "command", ":Unite -start-insert -buffer-name=Files file file/new"],
