@@ -60,6 +60,7 @@ NeoBundle 'vim-scripts/paredit.vim'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'dag/vim2hs'
 
+NeoBundle 'marijnh/tern_for_vim'
 
 " disable rope as it's very slow
 let g:pymode_rope=0
@@ -88,6 +89,19 @@ filetype plugin on
 filetype plugin indent on
 
 set wrap
+
+set completeopt=menuone,longest
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+  \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
+  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+" open omni completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+" open user completion menu closing previous if open and opening new menu without changing the text
+inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 
 let g:unite_cmd_list = {'menu' : [
     \ ["File: Open/New", "command", ":Unite -start-insert -buffer-name=Files file file/new"],
