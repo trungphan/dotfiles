@@ -21,6 +21,11 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " To install: :NeoBundleInstall
 " To update:  :NeoBundleUpdate
 " For unite-outline to work for java, must install exuberant-ctags
+" To compile vimproc in windows 32, use mingw32, but statically link libgcc
+" like this:
+" gcc -O2 -Wall -shared -m32 -o autoload/vimproc_win32.dll autoload/proc_32.c
+" -static -static-libgcc -lwsock32.
+" So basically, change the make_mingw32.mak to modify LDFLAGS+=-static -static-libgcc -lwsock32
 
 NeoBundle 'Shougo/vimproc'
 NeoBundle 'Shougo/unite.vim'
@@ -61,7 +66,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'dag/vim2hs'
 
 NeoBundle 'marijnh/tern_for_vim'
-NeoBundle 'Valloric/YouCompleteMe'
+" NeoBundle 'Valloric/YouCompleteMe'
 
 " disable rope as it's very slow
 let g:pymode_rope=0
@@ -233,12 +238,7 @@ call unite#filters#sorter_default#use(['sorter_rank'])
 call unite#custom#profile('source/grep', 'context', {'no_quit' : 1})
 
 let g:unite_source_history_yank_enable = 1
-if has('win32') || has('win64')
-    nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec<cr>
-else
-    nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
-endif
-
+nnoremap <leader>t :<C-u>Unite -buffer-name=files   -start-insert file_rec/async<cr>
 nnoremap <leader>f :<C-u>Unite -buffer-name=files   -start-insert file file/new<cr>
 nnoremap <leader>r :<C-u>Unite -buffer-name=mru     -start-insert neomru/file<cr>
 nnoremap <leader>o :<C-u>Unite -buffer-name=outline -start-insert outline<cr>
