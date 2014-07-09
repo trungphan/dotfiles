@@ -1,6 +1,5 @@
 set nocompatible
 
- 
 if has('gui_running') && has('windows')
     if has('win32') || has('win64')
 	    set guifont=DejaVu\ Sans\ Mono:h10
@@ -51,7 +50,7 @@ NeoBundle 'tpope/vim-fugitive'
 NeoBundle 'scratch.vim'
 NeoBundle 'sukima/xmledit'
 NeoBundle 'mattn/emmet-vim'
-NeoBundle 'msanders/snipmate.vim'
+" NeoBundle 'msanders/snipmate.vim'
 " NeoBundle 'git://git.code.sf.net/p/vim-latex/vim-latex', {'name': 'vim-latex'}
 " NeoBundle 'davidhalter/jedi-vim'
 " NeoBundle 'ivanov/vim-ipython' " not really need ipython
@@ -62,11 +61,12 @@ NeoBundle 'guns/vim-clojure-static'
 NeoBundle 'tpope/vim-fireplace'
 NeoBundle 'kien/rainbow_parentheses.vim'
 NeoBundle 'vim-scripts/paredit.vim'
-NeoBundle 'scrooloose/syntastic'
+" NeoBundle 'scrooloose/syntastic'
 NeoBundle 'dag/vim2hs'
 
 NeoBundle 'marijnh/tern_for_vim'
 " NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'Shougo/neocomplete'
 
 " disable rope as it's very slow
 let g:pymode_rope=0
@@ -76,6 +76,9 @@ let g:pymode_trim_whitespaces=1
 set t_Co=16
 colorscheme solarized
 let g:solarized_termcolors=16
+if has('win32') || has('win64')
+    let g:solarized_underline=0   "ConEmu does not support underline for Windows yet
+endif
 " let g:airline_theme='solarized'
 set background=light
 
@@ -97,17 +100,16 @@ filetype plugin indent on
 set wrap
 
 set completeopt=menuone,longest
-inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+"inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+"inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
   \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
-inoremap <expr> <M-,> pumvisible() ? '<C-n>' :
-  \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+"inoremap <expr> <M-,> pumvisible() ? '<C-n>' : \ '<C-x><C-o><C-n><C-p><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
 " open omni completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+"inoremap <expr> <C-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+"            \ '<C-x><C-o><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 " open user completion menu closing previous if open and opening new menu without changing the text
-inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
-            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
+"inoremap <expr> <S-Space> (pumvisible() ? (col('.') > 1 ? '<Esc>i<Right>' : '<Esc>i') : '') .
+"            \ '<C-x><C-u><C-r>=pumvisible() ? "\<lt>C-n>\<lt>C-p>\<lt>Down>" : ""<CR>'
 
 let g:ycm_filetype_blacklist = {
         \ 'java' : 1,
@@ -227,8 +229,8 @@ map <F7> :update<cr>:make<cr>:cw<cr><cr>
 map <F8> :cprevious<cr>
 map <F9> :cnext<cr>
 nmap <F5> :buffers<cr>:buffer<space>
-nmap <tab> :bnext<cr>
-nmap <S-tab> :bprevious<cr>
+"nmap <tab> :bnext<cr>
+"nmap <S-tab> :bprevious<cr>
 
 map <C-W><C-M> :update<cr>:make<cr>:cw<cr><cr>
 
@@ -327,6 +329,44 @@ au BufEnter *.tex set showbreak=
 au BufEnter *.scm set showbreak=↳\ | let b:match_skip='s:comment\|string\|character'
 " modify b:match_skip for scheme so that it ignores character constant #\( and
 " #\) when typing %
+
+if has('win32') || has('win64')
+    " windows is so slow for file_rec/async, so use ack instead
+    let g:unite_source_rec_async_command='ack -f --nofilter --ignore-dir={.git,.idea,node_modules,target,components}'
+endif
+
+if has('lua')
+    let g:neocomplete#enable_at_startup = 1
+    let g:neocomplete#auto_completion_start_length = 1
+    let g:neocomplete#sources#buffer#cache_limit_size = 50000
+    let g:neocomplete#data_directory = '~/.vim/cache/noecompl'
+    let g:neocomplete#enable_smart_case = 1
+    let g:neocomplete#sources#syntax#min_keyword_length = 2
+
+
+    if !exists('g:neocomplete#sources#omni#input_patterns')
+        let g:neocomplete#sources#omni#input_patterns = {}
+    endif
+    let g:neocomplete#sources#omni#input_patterns.php = '[^. \t]->\h\w*\|\h\w*::'
+    let g:neocomplete#sources#omni#input_patterns.c = '[^.[:digit:] *\t]\%(\.\|->\)'
+    let g:neocomplete#sources#omni#input_patterns.cpp = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+    
+    if !exists('g:neocomplete#force_omni_input_patterns')
+          let g:neocomplete#force_omni_input_patterns = {}
+    endif
+    let g:neocomplete#force_omni_input_patterns.javascript = '[^. \t]\.\w*'
+
+    inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+    inoremap <expr><C-h> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
+    inoremap <expr><C-y>  neocomplete#close_popup()
+    
+    autocmd FileType java NeoCompleteLock
+    autocmd FileType tex NeoCompleteLock
+    autocmd FileType python NeoCompleteLock
+
+endif
+
 
 " Load local vimrc if found
 if filereadable(glob(".vimrc.local"))
