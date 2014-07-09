@@ -332,7 +332,7 @@ au BufEnter *.scm set showbreak=↳\ | let b:match_skip='s:comment\|string\|char
 
 if has('win32') || has('win64')
     " windows is so slow for file_rec/async, so use ack instead
-    let g:unite_source_rec_async_command='ack -f --nofilter --ignore-dir={.git,.idea,node_modules,target,components}'
+    let g:unite_source_rec_async_command='ack -f --nofilter --ignore-dir={.git,.idea,node_modules,target,components,bower_components}'
 endif
 
 if has('lua')
