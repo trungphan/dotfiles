@@ -74,6 +74,7 @@ let maplocalleader= ' '
 
 let g:unite_source_menu_menus = {}
 source ~/.vim/packages/basic.vimrc
+source ~/.vim/packages/ranger.vimrc
 source ~/.vim/packages/fzf.vimrc
 source ~/.vim/packages/git.vimrc
 source ~/.vim/packages/code.vimrc

@@ -94,10 +94,6 @@ nnoremap <silent><leader>t :FZF<cr>
 " jump to the nth match of a search: e.g. 10,n
 map <Leader>n :<C-U>exe "normal! gg".v:count1."n"<CR><Plug>SearchIndex
 
-"Glaive ranger !remember_last_visited
-nnoremap <leader>f :<C-U>call ranger#RangeChooser('')<CR>
-nnoremap <leader>F :<C-U>call ranger#RangeChooser(expand('%:p'))<CR>
-
 vmap <C-c><C-c> "ay :call tmux#send#Send(@a) <CR>
 nmap <C-c><C-c> V"ay :call tmux#send#Send(@a)<CR>
 nmap <C-c>v :TmuxTarget<CR>
