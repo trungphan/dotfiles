@@ -1,0 +1,98 @@
+set nocompatible
+
+" Install NeoBundle if not exist
+let neobundle_readme=expand("~/.vim/bundle/neobundle.vim/README.md")
+if !filereadable(neobundle_readme)
+  echo "Installing NeoBundle.."
+  execute "silent !mkdir -p ~/.vim/bundle"
+  execute "silent !git clone https://github.com/Shougo/neobundle.vim ~/.vim/bundle/neobundle.vim"
+endif
+
+if has('vim_starting')
+  set runtimepath+=~/.vim/bundle/neobundle.vim
+  set rtp+=~/.fzf
+endif
+
+call neobundle#begin(expand('~/.vim/bundle/'))
+NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundle 'Shougo/vimproc', {'build': {'windows': 'make -f make_mingw32.mak', 'cygwin': 'make -f make_cygwin.mak', 'mac': 'make -f make_mac.mak', 'unix': 'make -f make_unix.mak'}}
+NeoBundle 'Shougo/unite.vim'
+NeoBundle 'Shougo/vimfiler'
+NeoBundle 'Shougo/unite-outline'    " mac: brew install ctags-exuberant, linux:
+NeoBundle 'Shougo/neomru.vim'
+NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'FelikZ/ctrlp-py-matcher'
+NeoBundle 'ton/vim-bufsurf'
+
+" Basic
+NeoBundle 'altercation/vim-colors-solarized'
+NeoBundle 'Yggdroot/indentLine'
+NeoBundle 'bling/vim-airline'
+NeoBundle 'ConradIrwin/vim-bracketed-paste'
+NeoBundle 'Lokaltog/vim-easymotion'
+" NeoBundle 'takac/vim-hardtime'               "To force to learn vim
+" NeoBundle 'kikijump/tslime.vim'
+" NeoBundle 'https://code.google.com/a/google.com/p/vim-tmux-send/', {'type__protocol': 'https', 'type': 'git'}
+" NeoBundle 'https://code.google.com/a/google.com/p/vim-ranger/', {'type__protocol': 'https', 'type': 'git'}
+NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'tpope/vim-dispatch'
+NeoBundle 'morhetz/gruvbox'                    "gruvbox colorscheme for 256 color
+NeoBundle 'vim-scripts/ZoomWin'
+NeoBundle 'terryma/vim-multiple-cursors'
+" NeoBundle 'vim-scripts/Conque-Shell' disable because of https://github.com/vim-scripts/Conque-Shell/pull/4
+" NeoBundle 'vaibhav276/Conque-Shell'
+NeoBundle 'google/vim-searchindex'
+NeoBundle 'sjl/gundo.vim'
+NeoBundle 'rking/ag.vim'
+NeoBundle 'NLKNguyen/papercolor-theme'
+NeoBundle 'vim-scripts/summerfruit256.vim'
+NeoBundle 'noahfrederick/vim-hemisu'
+
+" Git
+NeoBundle 'tpope/vim-fugitive'
+NeoBundle 'gregsexton/gitv'     "gitk for vim: a vim-fugitive plugin
+NeoBundle 'airblade/vim-gitgutter'
+
+" Code
+NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tpope/vim-surround'
+NeoBundle 'kien/rainbow_parentheses.vim'
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'Raimondi/delimitMate'
+" NeoBundle 'ervandew/supertab'
+NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'trungphan/vim-jump'
+NeoBundle 'scrooloose/syntastic.git'
+
+call neobundle#end()
+NeoBundleCheck
+
+" Key mappings
+" imap jk <Esc>
+let mapleader=','
+let maplocalleader= ' '
+
+let g:unite_source_menu_menus = {}
+source ~/.vim/packages/basic.vimrc
+source ~/.vim/packages/fzf.vimrc
+source ~/.vim/packages/git.vimrc
+source ~/.vim/packages/code.vimrc
+
+" Load local vimrc if found
+if filereadable(glob(".local.vimrc"))
+    source .local.vimrc
+endif
+if filereadable(glob(".vimrc.local"))
+    source .vimrc.local
+endif
+
+if (!exists("g:jump_pattern"))
+  let g:jump_pattern = [
+        \ ["/google3/java/\\(.*\\)\\.java$", "/google3/javatests/\\1Test.java"],
+        \ ["/google3/javatests/\\(.*\\)Test\\.java$", "/google3/java/\\1.java"],
+        \ ["/google3/java/\\(.*\\)/BUILD$", "/google3/javatests/\\1/BUILD"],
+        \ ["/google3/javatests/\\(.*\\)/BUILD$", "/google3/java/\\1/BUILD"],
+        \ ["/src/main/java/\\(.*\\)\\.java$", "/src/test/java/\\1Test.java"],
+        \ ["/src/test/java/\\(.*\\)Test\\.java$", "/src/main/java/\\1.java"]
+        \ ]
+endif

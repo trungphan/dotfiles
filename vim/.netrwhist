@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =7
+let g:netrw_dirhist_1='/Users/trungph/Desktop/Gatech/Robotics/code/python'
+let g:netrw_dirhist_2='/Users/trungph/Desktop/Gatech/Robotics/code/python/runaway'
+let g:netrw_dirhist_3='/Users/trungph/Desktop/Gatech/RLearning/Project'
+let g:netrw_dirhist_4='/Users/trungph/Desktop/Gatech/RLearning/Project/tex'
+let g:netrw_dirhist_5='/Users/trungph/Desktop/Gatech/RLearning'
+let g:netrw_dirhist_6='/Users/trungph/Desktop/Gatech/RLearning/Project'
+let g:netrw_dirhist_7='/Users/trungph/Desktop/Gatech/RLearning/Project/tex'
