@@ -53,6 +53,14 @@ colorscheme solarized
 
 hi VertSplit ctermbg=NONE guibg=NONE
 
+"Disable indentLine for tex because tex scroll very slowly due to conceal
+let g:indentLine_fileTypeExclude = ['tex', 'plaintex', 'latex', 'text', 'sh']
+
+" Disable conceal for tex, making navigation in tex much faster
+let g:tex_conceal = ""
+
+let g:tex_flavor='latex'
+
 "Easy motions
 nmap s <Plug>(easymotion-s)
 nmap <leader>w <Plug>(easymotion-bd-w)
